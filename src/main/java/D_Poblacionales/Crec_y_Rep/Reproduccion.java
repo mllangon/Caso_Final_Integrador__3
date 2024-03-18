@@ -1,8 +1,21 @@
 package D_Poblacionales.Crec_y_Rep;
 
+import D_Poblacionales.Eventos.CambioClimatico;
+import D_Poblacionales.Eventos.DesastreNatural;
+import D_Poblacionales.Eventos.Enfermedad;
+import D_Poblacionales.Eventos.EventoAleatorio;
 import Entidades.Organismos.Animales;
+import java.util.Random;
 
 public class Reproduccion {
+
+    private EventoAleatorio[] eventos = {new DesastreNatural(), new Enfermedad(), new CambioClimatico()};
+    private Random random = new Random();
+
+    public void aplicarEventoAleatorio(Animales animal) {
+        int eventoIndex = random.nextInt(eventos.length);
+        eventos[eventoIndex].aplicar(animal);
+    }
 
     public Animales reproducir(Animales animal1, Animales animal2) {
         if (!animal1.getEspecie().equals(animal2.getEspecie())) {
