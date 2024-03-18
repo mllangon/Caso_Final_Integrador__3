@@ -6,34 +6,45 @@ import java.awt.event.ActionListener;
 
 public class Interfaz extends JFrame {
     private JButton botonIniciar;
-    private JTextField campoParametro;
+    private JTextField campoUsuario;
+    private JPasswordField campoContrasena;
+    private Autenticacion autenticacion = new Autenticacion();
 
     public Interfaz() {
         setTitle("Simulación de Ecosistema");
-        setSize(400, 200);
+        setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
 
-        botonIniciar = new JButton("Iniciar Simulación");
-        botonIniciar.setBounds(50, 50, 200, 30);
+        botonIniciar = new JButton("Iniciar Sesión");
+        botonIniciar.setBounds(50, 200, 200, 30);
         add(botonIniciar);
 
-        campoParametro = new JTextField("Ingrese un parámetro");
-        campoParametro.setBounds(50, 100, 200, 30);
-        add(campoParametro);
+        campoUsuario = new JTextField("Usuario");
+        campoUsuario.setBounds(50, 50, 200, 30);
+        add(campoUsuario);
+
+        campoContrasena = new JPasswordField("Contraseña");
+        campoContrasena.setBounds(50, 100, 200, 30);
+        add(campoContrasena);
 
         botonIniciar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                iniciarSimulacion();
+                iniciarSesion();
             }
         });
     }
 
-    private void iniciarSimulacion() {
-        String parametro = campoParametro.getText();
-        // Aquí puedes iniciar tu simulación con el parámetro ingresado
-        System.out.println("Iniciando simulación con parámetro: " + parametro);
+    private void iniciarSesion() {
+        String usuario = campoUsuario.getText();
+        String contrasena = new String(campoContrasena.getPassword());
+        if (autenticacion.verificarCredenciales(usuario, contrasena)) {
+            System.out.println("Inicio de sesión exitoso");
+            // Aquí puedes iniciar tu simulación
+        } else {
+            System.out.println("Inicio de sesión fallido");
+        }
     }
 
     public static void main(String[] args) {
