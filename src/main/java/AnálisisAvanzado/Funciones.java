@@ -1,5 +1,6 @@
 package AnálisisAvanzado;
 import Entidades.Organismos.Animales;
+import Entidades.Organismos.Organismo;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -29,7 +30,14 @@ public class Funciones {
 
         // Aplicamos la estrategia de conservación
         for (int i = 0; i < estrategia; i++) {
-            animales.add(new Animales(especieEnPeligro));
+            // Aquí necesitas reemplazar los argumentos del constructor de Animales con los correctos
+            Organismo organismo = new Organismo();
+            Organismo.Posicion posicion = organismo.new Posicion(0, 0);
+            int arg1 = 0; // reemplaza con el valor correcto
+            int arg2 = 0; // reemplaza con el valor correcto
+            boolean arg3 = false; // reemplaza con el valor correcto
+            double arg4 = 0.0; // reemplaza con el valor correcto
+            animales.add(new Animales(posicion, arg1, arg2, arg3, especieEnPeligro, arg4));
         }
 
         Map<String, Integer> conteoEspeciesFinal = contarEspecies(animales);
