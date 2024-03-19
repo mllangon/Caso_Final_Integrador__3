@@ -4,6 +4,10 @@ import java.util.HashMap;
 public class Autenticacion {
     private HashMap<String, String> usuarios = new HashMap<>();
 
+    public Autenticacion() {
+        registrarUsuario("Usuario1", "EcoSim123");
+    }
+
     public void registrarUsuario(String usuario, String contrasena) {
         usuarios.put(usuario, contrasena);
     }
