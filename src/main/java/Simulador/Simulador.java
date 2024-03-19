@@ -76,7 +76,7 @@ public class Simulador {
                 String nombre1 = animal.getNombre();
                 String nombre2 = animal2.getNombre();
                 // Verifica si los nombres de los animales son iguales excepto por la última letra
-                boolean mismoNombre = nombre1.substring(0, nombre1.length() - 1).equals(nombre2.substring(0, nombre2.length() - 1));
+                boolean mismoNombre = nombre1.substring(0, nombre1.length() - 2).equals(nombre2.substring(0, nombre2.length() - 2));
 
                 if (!animal.equals(animal2) && !mismoNombre && Math.abs(animal.getPosicion().getX() - animal2.getPosicion().getX()) < 2 && Math.abs(animal.getPosicion().getY() - animal2.getPosicion().getY()) < 2) {
                     if (random.nextInt(100) < 50) { // Aumenta la probabilidad de las peleas al 50%
@@ -94,18 +94,17 @@ public class Simulador {
                         // Verifica si la vida de algún animal llegó a 0 y, de ser así, lo remueve del juego
                         if (animal.getSalud() <= 0) {
                             Animales.getAnimalesList().remove(animal);
-                            System.out.println(animal.getNombre() + " ha muerto y ha sido removido de la simulación");
+                            System.out.println(animal.getNombre() + " ha muerto y ha sido removido del juego");
                         }
                         if (animal2.getSalud() <= 0) {
                             Animales.getAnimalesList().remove(animal2);
-                            System.out.println(animal2.getNombre() + " ha muerto y ha sido removido de la simulación");
+                            System.out.println(animal2.getNombre() + " ha muerto y ha sido removido del juego");
                         }
                     }
                 }
             }
         }
     }
-
 
     public void mostrarResultados() {
         for (Animales animal : animalesMovidos) {
