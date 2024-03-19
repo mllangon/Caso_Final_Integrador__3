@@ -71,6 +71,7 @@ public class Simulacion {
         System.out.println("Población");
         System.out.println("Análisis");
         System.out.println("Simulación");
+        System.out.println("Salir");
 
         String opcion = scanner.nextLine();
 
@@ -83,7 +84,6 @@ public class Simulacion {
                 for (Animales animal : animales) {
                     System.out.println(animal);
                 }
-
                 System.out.println("Plantas:");
                 for (Plantas planta : plantas) {
                     System.out.println(planta);
@@ -96,6 +96,9 @@ public class Simulacion {
             case "Simulación":
                 System.out.println("Simulando...");
                 break;
+            case "Salir":
+                System.out.println("Saliendo...");
+                break;
             default:
                 System.out.println("Opción no válida.");
                 break;
@@ -103,27 +106,33 @@ public class Simulacion {
     }
 
     private void realizarAnalisis() {
+        // Assuming you have a list of animals and an environment already set up
         List<Animales> animales = Animales.getAnimalesList();
         Ambiente ambiente = new Ambiente("Arido", "Sabana", 1000);
-        // Aquí puedes llamar a los métodos de las clases Datos, Funciones y Problemas
-        System.out.println("Realizando análisis...");
 
-        // Para la visualización de datos
-        System.out.println(Datos.visualizarDatos(Animales.getAnimalesList()));
+        // Simulate environmental impact events
+        D_Poblacionales.Eventos.CambioClimatico cambioClimatico = new D_Poblacionales.Eventos.CambioClimatico();
+        D_Poblacionales.Eventos.DesastreNatural desastreNatural = new D_Poblacionales.Eventos.DesastreNatural();
+        D_Poblacionales.Eventos.Enfermedad enfermedad = new D_Poblacionales.Eventos.Enfermedad();
 
-        // Para registrar y ejecutar interacciones
-        // Ejemplo de cómo registrar y ejecutar una interacción
-        // Asumiendo que tienes una lista de Animales y un objeto Ambiente
-        funciones.registrarInteraccionOrganismos("predacion", (depredador, presa) -> {
-            // Aquí podrías definir lo que sucede en una predación
+        // Apply random events to animals
+        animales.forEach(animal -> {
+            cambioClimatico.aplicar(animal);
+            desastreNatural.aplicar(animal);
+            enfermedad.aplicar(animal);
         });
-        // Asumiendo que tienes al menos dos animales para demostrar la interacción
-        funciones.ejecutarInteraccionOrganismos("predacion", animales.get(0), animales.get(3));
 
-        // Para evaluar equilibrios, conservación y simular impactos
-        problemas.buscarEquilibrios();
-        problemas.evaluarConservacion(/* lista de animales */, /* ambiente */);
-        problemas.simularImpactos(/* ambiente */, /* predicado para simular cambio */);
+        // Perform analysis using Problemas class
+        Problemas problemas = new Problemas();
+        problemas.buscarEquilibrios(animales, ambiente);
+        problemas.evaluarConservacion(animales, ambiente);
+
+        // Example of a predicate to simulate an environmental change. You can customize this.
+        problemas.simularImpactos(ambiente, amb -> amb.getRecursos() < 800);
+
+        // Final data visualization
+        System.out.println("Análisis finalizado.");
+        System.out.println(Datos.visualizarDatos(animales));
     }
 
     public static void main(String[] args) {
