@@ -63,15 +63,15 @@ public class Simulacion {
         Ambiente ambiente2 = new Ambiente("Húmedo", "Bosque", 1000);
         Ambiente ambiente3 = new Ambiente("Soleado", "Pradera", 700);
 
-        Zona zona1 = new Zona(new ArrayList<>());
+        Zona zona1 = new Zona("Zona_Sabana",new ArrayList<>());
         zona1.setAmbiente(ambiente);
         zonas.add(zona1);
 
-        Zona zona2 = new Zona(new ArrayList<>());
+        Zona zona2 = new Zona("Zona_Bosque",new ArrayList<>());
         zona2.setAmbiente(ambiente2);
         zonas.add(zona2);
 
-        Zona zona3 = new Zona(new ArrayList<>());
+        Zona zona3 = new Zona("Zona_Pradera",new ArrayList<>());
         zona3.setAmbiente(ambiente3);
         zonas.add(zona3);
     }
