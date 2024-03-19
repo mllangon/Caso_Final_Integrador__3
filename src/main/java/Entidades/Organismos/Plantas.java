@@ -1,13 +1,20 @@
 package Entidades.Organismos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Plantas extends Organismo {
     private String tipo;
     private String especie;
+
+    private static List<Plantas> plantasList = new ArrayList<>();
+
 
     public Plantas(Posicion posicion, int salud, int edad, boolean estadoReproductivo, String tipo, String especie) {
         super(posicion, salud, edad, estadoReproductivo);
         this.tipo = tipo;
         this.especie = especie;
+        plantasList.add(this);
     }
 
     public String getTipo() {
@@ -24,5 +31,9 @@ public class Plantas extends Organismo {
 
     public void setEspecie(String especie) {
         this.especie = especie;
+    }
+
+    public static List<Plantas> getPlantasList() {
+        return plantasList;
     }
 }

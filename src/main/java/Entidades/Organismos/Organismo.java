@@ -45,7 +45,7 @@ public abstract class Organismo {
         this.estadoReproductivo = estadoReproductivo;
     }
 
-    public class Posicion {
+    public static class Posicion {
         private int x;
         private int y;
 
