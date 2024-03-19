@@ -78,24 +78,24 @@ public class Simulacion {
     public void iniciar() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Bienvenido a EcoSim");
-        System.out.println("Por favor, introduce tu usuario:");
+        System.out.println("\033[0;31m" + "Bienvenido a EcoSim");
+        System.out.println("\033[0;31m" + "Por favor, introduce tu usuario:" + "\033[0m");
         String usuario = scanner.nextLine();
-        System.out.println("Por favor, introduce tu contraseña:");
+        System.out.println("\033[0;31m" + "Por favor, introduce tu contraseña:" + "\033[0m");
         String contrasena = scanner.nextLine();
 
         if (autenticacion.verificarCredenciales(usuario, contrasena)) {
-            System.out.println("Has iniciado sesión correctamente.");
+            System.out.println("\033[0;31m" + "Has iniciado sesión correctamente." + "\033[0m");
             mostrarMenu();
         } else {
-            System.out.println("Las credenciales proporcionadas son incorrectas.");
+            System.out.println("\033[0;31m" + "Las credenciales proporcionadas son incorrectas." + "\033[0m");
         }
     }
 
     private void mostrarMenu() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Elige una opción:");
+        System.out.println("\033[0;31m" + "Elige una opción:" + "\033[0m");
         System.out.println("Población");
         System.out.println("Análisis");
         System.out.println("Simulación");
@@ -108,11 +108,11 @@ public class Simulacion {
                 List<Animales> animales = Animales.getAnimalesList();
                 List<Plantas> plantas = Plantas.getPlantasList();
 
-                System.out.println("Animales:");
+                System.out.println("\033[0;31m" + "Animales:" + "\033[0m");
                 for (Animales animal : animales) {
                     System.out.println(animal);
                 }
-                System.out.println("Plantas:");
+                System.out.println("\033[0;31m" + "Plantas:" + "\033[0m");
                 for (Plantas planta : plantas) {
                     System.out.println(planta);
                 }
@@ -123,32 +123,33 @@ public class Simulacion {
                 Problemas problemas = new Problemas();
 
                 // Muestra los posibles eventos
-                System.out.println("Posibles eventos:");
+                System.out.println("\033[0;31m" + "Posibles eventos:" + "\033[0m");
                 for (EventoAleatorio evento : eventos) {
                     System.out.println(evento.getClass().getSimpleName());
                 }
 
                 // Muestra los datos de los ambientes
-                System.out.println("Datos de los ambientes:");
+                System.out.println("\033[0;31m" + "Datos de los ambientes:" + "\033[0m");
                 for (Zona zona : zonas) {
                     Ambiente ambiente = zona.getAmbiente();
-                    System.out.println("Ambiente: " + ambiente.getTipo() + ", " + ambiente.getSubtipo() + ", Recursos: " + ambiente.getRecursos());
+                    System.out.println("Ambiente: " + ambiente.getClima() + ", " + ambiente.getTerreno() + ", Recursos: " + ambiente.getRecursos());
                 }
 
                 // Muestra los datos de los animales
-                System.out.println("Datos de los animales:");
-                System.out.println(datos.visualizarDatos(Animales.getAnimalesList()));
-
+                System.out.println("\033[0;31m" + "Datos de los animales:" + "\033[0m");
+                for (Animales animal : Animales.getAnimalesList()) {
+                    System.out.println("Nombre: " + animal.getNombre() + ", Especie: " + animal.getEspecie() + ", Salud: " + animal.getSalud() + ", Edad: " + animal.getEdad() + ", Estado Reproductivo: " + (animal.isEstadoReproductivo() ? "Sí" : "No") + ", Peso: " + animal.getPeso());
+                }
                 break;
             case "Simulación":
-                System.out.println("Comenzando simulación...");
+                System.out.println("\033[0;31m" + "Comenzando simulación..." + "\033[0m");
                 simulador.iniciarSimulacion();
                 break;
             case "Salir":
-                System.out.println("Saliendo...");
+                System.out.println("\033[0;31m" + "Saliendo..." + "\033[0m");
                 break;
             default:
-                System.out.println("Opción no válida.");
+                System.out.println("\033[0;31m" + "Opción no válida." + "\033[0m");
                 break;
         }
     }
