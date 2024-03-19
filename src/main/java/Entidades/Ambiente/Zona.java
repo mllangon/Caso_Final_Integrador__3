@@ -19,4 +19,7 @@ public class Zona {
     public Ambiente getAmbiente() {
         return this.ambiente;
     }
+    public void setAmbiente(Ambiente ambiente) {
+        this.ambiente = ambiente;
+    }
 }
