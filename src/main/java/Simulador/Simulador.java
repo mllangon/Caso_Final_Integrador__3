@@ -2,6 +2,7 @@ package Simulador;
 
 import Entidades.Organismos.Organismo;
 import Entidades.Organismos.Animales;
+import Entidades.Ambiente.Zona;
 import D_Poblacionales.Crec_y_Rep.Crecimiento;
 import D_Poblacionales.Crec_y_Rep.Reproduccion;
 import D_Poblacionales.Eventos.CambioClimatico;
@@ -15,11 +16,18 @@ import java.util.Scanner;
 import java.util.Collections;
 
 public class Simulador {
+    private List<Animales> animalesMovidos = new ArrayList<>();
+    private List<Zona> zonas;
+    public Simulador(List<Zona> zonas) {
+        if (zonas == null) {
+            throw new IllegalArgumentException("La lista de zonas no puede ser null");
+        }
+        this.zonas = zonas;
+    }
     private Random random = new Random();
     private EventoAleatorio[] eventos = {new DesastreNatural(), new CambioClimatico()};
     private Crecimiento crecimiento = new Crecimiento();
     private Reproduccion reproduccion = new Reproduccion();
-    private List<Animales> animalesMovidos = new ArrayList<>();
 
     public void iniciarSimulacion() {
         int dia = 1;
@@ -58,16 +66,14 @@ public class Simulador {
     }
 
     public void aplicarEventos() {
-        List<Animales> animales = Animales.getAnimalesList();
-        for (Animales animal : animales) {
-            if (random.nextInt(100) < 10) { // 10% de probabilidad de que ocurra un evento
+        for (Zona zona : zonas) {
+            if (random.nextInt(100) < 100) { // Aumenta la probabilidad de que ocurra un evento al 100%
                 int eventoIndex = random.nextInt(eventos.length);
-                eventos[eventoIndex].aplicar(animal);
-                System.out.println("Se ha aplicado el evento " + eventos[eventoIndex].getClass().getSimpleName() + " a " + animal.getNombre());
+                eventos[eventoIndex].aplicar(zona);
+                System.out.println("Se ha aplicado el evento " + eventos[eventoIndex].getClass().getSimpleName() + " a la zona " + zona);
             }
         }
     }
-
     public void pelear() {
         List<Animales> copiaAnimales = new ArrayList<>(Animales.getAnimalesList());
 
@@ -77,8 +83,9 @@ public class Simulador {
                 String nombre2 = animal2.getNombre();
                 // Verifica si los nombres de los animales son iguales excepto por la última letra
                 boolean mismoNombre = nombre1.substring(0, nombre1.length() - 2).equals(nombre2.substring(0, nombre2.length() - 2));
+                boolean diferenteSexo = !nombre1.substring(nombre1.length() - 1).equals(nombre2.substring(nombre2.length() - 1));
 
-                if (!animal.equals(animal2) && !mismoNombre && Math.abs(animal.getPosicion().getX() - animal2.getPosicion().getX()) < 2 && Math.abs(animal.getPosicion().getY() - animal2.getPosicion().getY()) < 2) {
+                if (!animal.equals(animal2) && mismoNombre && diferenteSexo && Math.abs(animal.getPosicion().getX() - animal2.getPosicion().getX()) < 2 && Math.abs(animal.getPosicion().getY() - animal2.getPosicion().getY()) < 2) {
                     if (random.nextInt(100) < 50) { // Aumenta la probabilidad de las peleas al 50%
                         if (animal.getSalud() > animal2.getSalud()) {
                             animal2.setSalud(0);

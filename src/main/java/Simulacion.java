@@ -17,10 +17,14 @@ import D_Poblacionales.Eventos.CambioClimatico;
 import D_Poblacionales.Eventos.DesastreNatural;
 import D_Poblacionales.Eventos.Enfermedad;
 import D_Poblacionales.Eventos.EventoAleatorio;
+import Entidades.Ambiente.Zona;
 import Simulador.Simulador;
+import java.util.ArrayList;
 public class Simulacion {
     Scanner scanner = new Scanner(System.in);
-    private Simulador simulador = new Simulador();
+    List<Zona> zonas = new ArrayList<>();
+    List<Animales> animales = Animales.getAnimalesList();
+    private Simulador simulador = new Simulador(zonas);
     private Autenticacion autenticacion;
     private Datos datos;
     private Funciones funciones;
@@ -55,7 +59,21 @@ public class Simulacion {
         Plantas planta4 = new Plantas("Arbusto", new Posicion(3, 3), 100, 5, true, "Arbusto", "Bosque");
         Plantas planta5 = new Plantas("Frutas", new Posicion(4, 4), 100, 5, true, "Fruto", "Bosque");
 
+        Ambiente ambiente = new Ambiente("Arido", "Sabana", 500);
+        Ambiente ambiente2 = new Ambiente("Húmedo", "Bosque", 1000);
+        Ambiente ambiente3 = new Ambiente("Soleado", "Pradera", 700);
 
+        Zona zona1 = new Zona(new ArrayList<>());
+        zona1.setAmbiente(ambiente);
+        zonas.add(zona1);
+
+        Zona zona2 = new Zona(new ArrayList<>());
+        zona2.setAmbiente(ambiente2);
+        zonas.add(zona2);
+
+        Zona zona3 = new Zona(new ArrayList<>());
+        zona3.setAmbiente(ambiente3);
+        zonas.add(zona3);
     }
     public void iniciar() {
         Scanner scanner = new Scanner(System.in);
@@ -100,7 +118,26 @@ public class Simulacion {
                 }
                 break;
             case "Análisis":
-                realizarAnalisis();
+                Datos datos = new Datos();
+                Funciones funciones = new Funciones();
+                Problemas problemas = new Problemas();
+
+                // Muestra los posibles eventos
+                System.out.println("Posibles eventos:");
+                for (EventoAleatorio evento : eventos) {
+                    System.out.println(evento.getClass().getSimpleName());
+                }
+
+                // Muestra los datos de los ambientes
+                System.out.println("Datos de los ambientes:");
+                for (Zona zona : zonas) {
+                    Ambiente ambiente = zona.getAmbiente();
+                    System.out.println("Ambiente: " + ambiente.getTipo() + ", " + ambiente.getSubtipo() + ", Recursos: " + ambiente.getRecursos());
+                }
+
+                // Muestra los datos de los animales
+                System.out.println("Datos de los animales:");
+                System.out.println(datos.visualizarDatos(Animales.getAnimalesList()));
 
                 break;
             case "Simulación":
@@ -114,36 +151,6 @@ public class Simulacion {
                 System.out.println("Opción no válida.");
                 break;
         }
-    }
-
-    private void realizarAnalisis() {
-        // Assuming you have a list of animals and an environment already set up
-        List<Animales> animales = Animales.getAnimalesList();
-        Ambiente ambiente = new Ambiente("Arido", "Sabana", 1000);
-
-        // Simulate environmental impact events
-        D_Poblacionales.Eventos.CambioClimatico cambioClimatico = new D_Poblacionales.Eventos.CambioClimatico();
-        D_Poblacionales.Eventos.DesastreNatural desastreNatural = new D_Poblacionales.Eventos.DesastreNatural();
-        D_Poblacionales.Eventos.Enfermedad enfermedad = new D_Poblacionales.Eventos.Enfermedad();
-
-        // Apply random events to animals
-        animales.forEach(animal -> {
-            cambioClimatico.aplicar(animal);
-            desastreNatural.aplicar(animal);
-            enfermedad.aplicar(animal);
-        });
-
-        // Perform analysis using Problemas class
-        Problemas problemas = new Problemas();
-        problemas.buscarEquilibrios(animales, ambiente);
-        problemas.evaluarConservacion(animales, ambiente);
-
-        // Example of a predicate to simulate an environmental change. You can customize this.
-        problemas.simularImpactos(ambiente, amb -> amb.getRecursos() < 800);
-
-        // Final data visualization
-        System.out.println("Análisis finalizado.");
-        System.out.println(Datos.visualizarDatos(animales));
     }
 
     public static void main(String[] args) {

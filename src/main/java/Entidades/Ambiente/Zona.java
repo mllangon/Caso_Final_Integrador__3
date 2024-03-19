@@ -5,6 +5,8 @@ import Entidades.Organismos.Animales;
 import java.util.List;
 
 public class Zona {
+    private Ambiente ambiente;
+
     private List<Animales> animalesEnZona;
 
     public Zona(List<Animales> animalesEnZona) {
@@ -13,5 +15,8 @@ public class Zona {
 
     public List<Animales> getAnimalesEnZona() {
         return animalesEnZona;
+    }
+    public Ambiente getAmbiente() {
+        return this.ambiente;
     }
 }

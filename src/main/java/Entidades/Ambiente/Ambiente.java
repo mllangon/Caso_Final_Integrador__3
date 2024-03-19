@@ -1,6 +1,8 @@
 package Entidades.Ambiente;
 
 public class Ambiente {
+    private String tipo;
+    private String subtipo;
     private String clima;
     private String terreno;
     private int recursos;
@@ -33,5 +35,19 @@ public class Ambiente {
 
     public void setRecursos(int recursos) {
         this.recursos = recursos;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setSubtipo(String subtipo) {
+        this.subtipo = subtipo;
+    }
+    public String getTipo() {
+        return this.tipo;
+    }
+    public String getSubtipo() {
+        return this.subtipo;
     }
 }
