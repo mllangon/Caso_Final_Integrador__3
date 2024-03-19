@@ -18,30 +18,29 @@ public class Reproduccion {
     }
 
     public Animales reproducir(Animales animal1, Animales animal2) {
-        if (!animal1.getEspecie().equals(animal2.getEspecie())) {
-            throw new IllegalArgumentException("Los animales deben ser de la misma especie para reproducirse");
+        String nombre1 = animal1.getNombre();
+        String nombre2 = animal2.getNombre();
+
+        // Verifica si los nombres de los animales son iguales excepto por la última letra
+        if (nombre1.substring(0, nombre1.length() - 1).equals(nombre2.substring(0, nombre2.length() - 1)) &&
+                ((nombre1.endsWith("H") && nombre2.endsWith("M")) || (nombre1.endsWith("M") && nombre2.endsWith("H")))) {
+            if (animal1.getSalud() < 50 || animal2.getSalud() < 50) {
+                throw new IllegalArgumentException("Ambos animales deben tener una salud de al menos 50 para reproducirse");
+            }
+
+            Animales nuevoAnimal = new Animales(
+                    "Nombre del nuevo animal",
+                    animal1.getPosicion(),
+                    (animal1.getSalud() + animal2.getSalud()) / 2,
+                    Math.max(animal1.getEdad(), animal2.getEdad()),
+                    false,
+                    animal1.getEspecie(),
+                    animal1.getAlimentacion() // Asume que ambos animales tienen el mismo tipo de alimentación
+            );
+
+            return nuevoAnimal;
+        } else {
+            throw new IllegalArgumentException("Los animales deben ser de la misma especie y de sexos opuestos para reproducirse");
         }
-
-        if (!animal1.isEstadoReproductivo() || !animal2.isEstadoReproductivo()) {
-            throw new IllegalArgumentException("Ambos animales deben estar en estado reproductivo para reproducirse");
-        }
-
-        if (animal1.getSalud() < 50 || animal2.getSalud() < 50) {
-            throw new IllegalArgumentException("Ambos animales deben tener una salud de al menos 50 para reproducirse");
-        }
-
-        double alimentacion = Double.parseDouble(animal1.getAlimentacion());
-
-        Animales nuevoAnimal = new Animales(
-                "Nombre del nuevo animal",
-                animal1.getPosicion(),
-                (animal1.getSalud() + animal2.getSalud()) / 2,
-                Math.max(animal1.getEdad(), animal2.getEdad()),
-                false,
-                animal1.getEspecie(),
-                alimentacion
-        );
-
-        return nuevoAnimal;
     }
 }

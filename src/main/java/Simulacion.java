@@ -36,18 +36,18 @@ public class Simulacion {
 
         Animales carnivoroMacho1 = new Animales("Leon_M", new Posicion(0, 0), 100, 5, true, "Carnívoro", 50);
         Animales carnivoroHembra1 = new Animales("León_H", new Posicion(1, 1), 100, 5, true, "Carnívoro", 45);
-        Animales carnivoroMacho2 = new Animales("Tigre_M", new Posicion(2, 2), 100, 5, true, "Carnívoro", 50);
-        Animales carnivoroHembra2 = new Animales("Tigre_H", new Posicion(3, 3), 100, 5, true, "Carnívoro", 45);
+        Animales carnivoroMacho2 = new Animales("Tigre_M", new Posicion(8, 2), 100, 5, true, "Carnívoro", 50);
+        Animales carnivoroHembra2 = new Animales("Tigre_H", new Posicion(9, 3), 100, 5, true, "Carnívoro", 45);
 
-        Animales herbivoroMacho1 = new Animales("Ñu_M", new Posicion(2, 2), 100, 5, true, "Herbívoro", 50);
-        Animales herbivoroHembra1 = new Animales("Ñu_H",new Posicion(3, 3), 100, 5, true, "Herbívoro", 45);
-        Animales herbivoroMacho2 = new Animales("Cebra_M", new Posicion(2, 2), 100, 5, true, "Herbívoro", 50);
-        Animales herbivoroHembra2 = new Animales("Cebra_H", new Posicion(3, 3), 100, 5, true, "Herbívoro", 45);
+        Animales herbivoroMacho1 = new Animales("Ñu_M", new Posicion(13, 2), 100, 5, true, "Herbívoro", 50);
+        Animales herbivoroHembra1 = new Animales("Ñu_H",new Posicion(15, 3), 100, 5, true, "Herbívoro", 45);
+        Animales herbivoroMacho2 = new Animales("Cebra_M", new Posicion(26, 2), 100, 5, true, "Herbívoro", 50);
+        Animales herbivoroHembra2 = new Animales("Cebra_H", new Posicion(23, 3), 100, 5, true, "Herbívoro", 45);
 
-        Animales omnivoroMacho1 = new Animales("Oso_M", new Posicion(4, 4), 100, 5, true, "Omnívoro", 50);
-        Animales omnivoroHembra1 = new Animales("Oso_H", new Posicion(5, 5), 100, 5, true, "Omnívoro", 45);
-        Animales omnivoroMacho2 = new Animales("Mono_M", new Posicion(6, 6), 100, 5, true, "Omnívoro", 50);
-        Animales omnivoroHembra2 = new Animales("Mono_H", new Posicion(7, 7), 100, 5, true, "Omnívoro", 45);
+        Animales omnivoroMacho1 = new Animales("Oso_M", new Posicion(34, 4), 100, 5, true, "Omnívoro", 50);
+        Animales omnivoroHembra1 = new Animales("Oso_H", new Posicion(35, 5), 100, 5, true, "Omnívoro", 45);
+        Animales omnivoroMacho2 = new Animales("Mono_M", new Posicion(46, 6), 100, 5, true, "Omnívoro", 50);
+        Animales omnivoroHembra2 = new Animales("Mono_H", new Posicion(47, 7), 100, 5, true, "Omnívoro", 45);
 
         Plantas planta1 = new Plantas("Árbol_S", new Posicion(0, 0), 100, 5, true, "Arbol", "Sabana");
         Plantas planta2 = new Plantas("Árbol_B", new Posicion(1, 1), 100, 5, true, "Arbol", "Bosque");

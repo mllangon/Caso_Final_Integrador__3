@@ -6,9 +6,12 @@ public class CambioClimatico extends EventoAleatorio {
     @Override
     public void aplicar(Animales animal) {
         if (random.nextBoolean()) {
-            double alimentacion = Double.parseDouble(animal.getAlimentacion());
-            alimentacion -= random.nextInt(10);
-            animal.setAlimentacion(String.valueOf(alimentacion));
+            String alimentacionStr = animal.getAlimentacion();
+            if (alimentacionStr != null) {
+                double alimentacion = Double.parseDouble(alimentacionStr);
+                alimentacion -= random.nextInt(10);
+                animal.setAlimentacion(String.valueOf(alimentacion));
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Collections;
 
 public class Simulador {
     private Random random = new Random();
@@ -33,6 +34,7 @@ public class Simulador {
             Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
             if ("salir".equalsIgnoreCase(input)) {
+                System.out.println("Simulación terminada.");
                 break;
             }
             dia++;
@@ -42,54 +44,55 @@ public class Simulador {
 
     public void desplazarAnimales() {
         List<Animales> animales = Animales.getAnimalesList();
-        if (animales != null) {
-            for (Animales animal : animales) {
-                if (!animalesMovidos.contains(animal)) {
-                    Organismo.Posicion posicion = animal.getPosicion();
-                    if (posicion != null) {
-                        posicion.setX(posicion.getX() + random.nextInt(3) - 1);
-                        posicion.setY(posicion.getY() + random.nextInt(3) - 1);
-                        System.out.println(animal.getNombre() + " se ha movido a la posición (" + posicion.getX() + ", " + posicion.getY() + ")");
-                        animalesMovidos.add(animal);
-                        break;
-                    }
-                }
+        Collections.shuffle(animales); // Aleatoriza la lista de animales
+        for (Animales animal : animales) {
+            if (!animalesMovidos.contains(animal)) {
+                Organismo.Posicion posicion = animal.getPosicion();
+                posicion.setX(posicion.getX() + random.nextInt(3) - 1);
+                posicion.setY(posicion.getY() + random.nextInt(3) - 1);
+                System.out.println(animal.getNombre() + " se ha movido a la posición (" + posicion.getX() + ", " + posicion.getY() + ")");
+                animalesMovidos.add(animal);
+                break;
             }
         }
     }
 
     public void aplicarEventos() {
         List<Animales> animales = Animales.getAnimalesList();
-        if (animales != null) {
-            for (Animales animal : animales) {
-                if (animal != null) {
-                    if (random.nextInt(100) < 10) { // 10% de probabilidad de que ocurra un evento
-                        int eventoIndex = random.nextInt(eventos.length);
-                        EventoAleatorio evento = eventos[eventoIndex];
-                        if (evento != null) {
-                            evento.aplicar(animal);
-                            System.out.println("Se ha aplicado el evento " + evento.getClass().getSimpleName() + " a " + animal.getNombre());
-                        }
-                    }
-                }
+        for (Animales animal : animales) {
+            if (random.nextInt(100) < 10) { // 10% de probabilidad de que ocurra un evento
+                int eventoIndex = random.nextInt(eventos.length);
+                eventos[eventoIndex].aplicar(animal);
+                System.out.println("Se ha aplicado el evento " + eventos[eventoIndex].getClass().getSimpleName() + " a " + animal.getNombre());
             }
         }
     }
 
     public void pelear() {
         List<Animales> animales = Animales.getAnimalesList();
-        if (animales != null) {
-            for (Animales animal1 : animales) {
-                if (animal1 != null) {
-                    for (Animales animal2 : animales) {
-                        if (animal2 != null && !animal1.equals(animal2) && animal1.getPosicion().equals(animal2.getPosicion())) {
-                            if (animal1.getSalud() > animal2.getSalud()) {
-                                animal2.setSalud(0);
-                                System.out.println(animal1.getNombre() + " ha ganado la pelea contra " + animal2.getNombre());
-                            } else {
-                                animal1.setSalud(0);
-                                System.out.println(animal2.getNombre() + " ha ganado la pelea contra " + animal1.getNombre());
-                            }
+        for (Animales animal1 : animales) {
+            for (Animales animal2 : animales) {
+                if (!animal1.equals(animal2) && Math.abs(animal1.getPosicion().getX() - animal2.getPosicion().getX()) < 2 && Math.abs(animal1.getPosicion().getY() - animal2.getPosicion().getY()) < 2) {
+                    if (random.nextInt(100) < 50) { // Aumenta la probabilidad de las peleas al 50%
+                        if (animal1.getSalud() > animal2.getSalud()) {
+                            animal2.setSalud(0);
+                            System.out.println(animal1.getNombre() + " ha ganado la pelea contra " + animal2.getNombre());
+                        } else {
+                            animal1.setSalud(0);
+                            System.out.println(animal2.getNombre() + " ha ganado la pelea contra " + animal1.getNombre());
+                        }
+                        // Muestra la nueva vida de cada animal
+                        System.out.println(animal1.getNombre() + " tiene ahora " + animal1.getSalud() + " de vida");
+                        System.out.println(animal2.getNombre() + " tiene ahora " + animal2.getSalud() + " de vida");
+
+                        // Verifica si la vida de algún animal llegó a 0 y, de ser así, lo remueve del juego
+                        if (animal1.getSalud() <= 0) {
+                            animales.remove(animal1);
+                            System.out.println(animal1.getNombre() + " ha muerto y ha sido removido del juego");
+                        }
+                        if (animal2.getSalud() <= 0) {
+                            animales.remove(animal2);
+                            System.out.println(animal2.getNombre() + " ha muerto y ha sido removido del juego");
                         }
                     }
                 }
