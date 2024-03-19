@@ -9,14 +9,16 @@ import D_Poblacionales.Eventos.DesastreNatural;
 import D_Poblacionales.Eventos.Enfermedad;
 import D_Poblacionales.Eventos.EventoAleatorio;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Simulador {
     private Random random = new Random();
-    private EventoAleatorio[] eventos = {new DesastreNatural(), new Enfermedad(), new CambioClimatico()};
+    private EventoAleatorio[] eventos = {new DesastreNatural(), new CambioClimatico()};
     private Crecimiento crecimiento = new Crecimiento();
     private Reproduccion reproduccion = new Reproduccion();
+    private List<Animales> animalesMovidos = new ArrayList<>();
 
     public void iniciarSimulacion() {
         int dia = 1;
@@ -24,6 +26,7 @@ public class Simulador {
             System.out.println("Día " + dia + " de la simulación:");
             desplazarAnimales();
             aplicarEventos();
+            pelear();
             mostrarResultados();
 
             System.out.println("Presione Enter para el siguiente turno o escriba 'salir' para terminar la simulación.");
@@ -33,16 +36,21 @@ public class Simulador {
                 break;
             }
             dia++;
+            animalesMovidos.clear();
         }
     }
 
     public void desplazarAnimales() {
         List<Animales> animales = Animales.getAnimalesList();
         for (Animales animal : animales) {
-            Organismo.Posicion posicion = animal.getPosicion();
-            posicion.setX(posicion.getX() + random.nextInt(3) - 1);
-            posicion.setY(posicion.getY() + random.nextInt(3) - 1);
-            System.out.println(animal.getNombre() + " se ha movido a la posición (" + posicion.getX() + ", " + posicion.getY() + ")");
+            if (!animalesMovidos.contains(animal)) {
+                Organismo.Posicion posicion = animal.getPosicion();
+                posicion.setX(posicion.getX() + random.nextInt(3) - 1);
+                posicion.setY(posicion.getY() + random.nextInt(3) - 1);
+                System.out.println(animal.getNombre() + " se ha movido a la posición (" + posicion.getX() + ", " + posicion.getY() + ")");
+                animalesMovidos.add(animal);
+                break;
+            }
         }
     }
 
@@ -57,10 +65,26 @@ public class Simulador {
         }
     }
 
-    public void mostrarResultados() {
+    public void pelear() {
         List<Animales> animales = Animales.getAnimalesList();
-        for (Animales animal : animales) {
-            System.out.println(animal.getNombre() + " está en la posición (" + animal.getPosicion().getX() + ", " + animal.getPosicion().getY() + ")");
+        for (Animales animal1 : animales) {
+            for (Animales animal2 : animales) {
+                if (!animal1.equals(animal2) && animal1.getPosicion().equals(animal2.getPosicion())) {
+                    if (animal1.getSalud() > animal2.getSalud()) {
+                        animal2.setSalud(0);
+                        System.out.println(animal1.getNombre() + " ha ganado la pelea contra " + animal2.getNombre());
+                    } else {
+                        animal1.setSalud(0);
+                        System.out.println(animal2.getNombre() + " ha ganado la pelea contra " + animal1.getNombre());
+                    }
+                }
+            }
+        }
+    }
+
+    public void mostrarResultados() {
+        for (Animales animal : animalesMovidos) {
+            System.out.println(animal.getNombre() + " está en la posición (" + animal.getPosicion().getX() + ", " + animal.getPosicion().getY() + ") y tiene " + animal.getSalud() + " de vida");
         }
     }
 }

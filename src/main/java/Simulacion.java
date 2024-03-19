@@ -19,6 +19,7 @@ import D_Poblacionales.Eventos.Enfermedad;
 import D_Poblacionales.Eventos.EventoAleatorio;
 import Simulador.Simulador;
 public class Simulacion {
+    Scanner scanner = new Scanner(System.in);
     private Simulador simulador = new Simulador();
     private Autenticacion autenticacion;
     private Datos datos;

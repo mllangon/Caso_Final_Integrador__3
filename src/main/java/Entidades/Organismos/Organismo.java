@@ -8,6 +8,9 @@ public abstract class Organismo {
     private boolean estadoReproductivo;
 
     public Organismo(String nombre, Posicion posicion, int salud, int edad, boolean estadoReproductivo) {
+        if (nombre == null || posicion == null) {
+            throw new IllegalArgumentException("Nombre y posición no pueden ser null");
+        }
         this.nombre = nombre;
         this.posicion = posicion;
         this.salud = salud;
