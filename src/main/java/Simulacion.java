@@ -75,11 +75,6 @@ public class Simulacion {
                 for (Plantas planta : plantas) {
                     System.out.println(planta);
                 }
-                Plantas planta1 = new Plantas("Árbol_S", new Posicion(0, 0), 100, 5, true, "Arbol", "Sabana");
-                Plantas planta2 = new Plantas("Árbol_B", new Posicion(1, 1), 100, 5, true, "Arbol", "Bosque");
-                Plantas planta3 = new Plantas("Hierba_S", new Posicion(2, 2), 100, 5, true, "Hierba", "Sabana");
-                Plantas planta4 = new Plantas("Arbusto", new Posicion(3, 3), 100, 5, true, "Arbusto", "Bosque");
-                Plantas planta5 = new Plantas("Frutas", new Posicion(4, 4), 100, 5, true, "Fruto", "Bosque");
                 break;
             case "Análisis":
                 // Aquí implementar la funcionalidad para la opción "Análisis"
