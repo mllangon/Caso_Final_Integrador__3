@@ -1,18 +1,23 @@
 package Entidades.Organismos;
 
 public abstract class Organismo {
+    private String nombre;
     private Posicion posicion;
     private int salud;
     private int edad;
     private boolean estadoReproductivo;
 
-    public Organismo(Posicion posicion, int salud, int edad, boolean estadoReproductivo) {
+    public Organismo(String nombre, Posicion posicion, int salud, int edad, boolean estadoReproductivo) {
+        this.nombre = nombre;
         this.posicion = posicion;
         this.salud = salud;
         this.edad = edad;
         this.estadoReproductivo = estadoReproductivo;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
     public Posicion getPosicion() {
         return posicion;
     }

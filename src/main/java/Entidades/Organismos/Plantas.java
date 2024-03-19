@@ -10,8 +10,8 @@ public class Plantas extends Organismo {
     private static List<Plantas> plantasList = new ArrayList<>();
 
 
-    public Plantas(Posicion posicion, int salud, int edad, boolean estadoReproductivo, String tipo, String especie) {
-        super(posicion, salud, edad, estadoReproductivo);
+    public Plantas(String nombre, Posicion posicion, int salud, int edad, boolean estadoReproductivo, String tipo, String especie) {
+        super(nombre, posicion, salud, edad, estadoReproductivo);
         this.tipo = tipo;
         this.especie = especie;
         plantasList.add(this);
@@ -35,5 +35,9 @@ public class Plantas extends Organismo {
 
     public static List<Plantas> getPlantasList() {
         return plantasList;
+    }
+    @Override
+    public String toString() {
+        return "Animal: " + this.getNombre();
     }
 }

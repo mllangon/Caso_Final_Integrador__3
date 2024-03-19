@@ -33,6 +33,7 @@ public class Reproduccion {
         double alimentacion = Double.parseDouble(animal1.getAlimentacion());
 
         Animales nuevoAnimal = new Animales(
+                "Nombre del nuevo animal",
                 animal1.getPosicion(),
                 (animal1.getSalud() + animal2.getSalud()) / 2,
                 Math.max(animal1.getEdad(), animal2.getEdad()),
