@@ -67,10 +67,10 @@ public class Simulador {
 
     public void aplicarEventos() {
         for (Zona zona : zonas) {
-            if (random.nextInt(100) < 100) { // Aumenta la probabilidad de que ocurra un evento al 100%
+            if (random.nextInt(100) < 80) { // Aumenta la probabilidad de que ocurra un evento al 100%
                 int eventoIndex = random.nextInt(eventos.length);
                 eventos[eventoIndex].aplicar(zona);
-                System.out.println("Se ha aplicado el evento " + eventos[eventoIndex].getClass().getSimpleName() + " a la zona " + zona);
+                System.out.println("Se ha aplicado el evento " + eventos[eventoIndex].getClass().getSimpleName() + " a la zona " + zona.getNombre());
             }
         }
     }
