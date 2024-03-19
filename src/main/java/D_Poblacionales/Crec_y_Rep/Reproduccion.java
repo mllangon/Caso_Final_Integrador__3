@@ -28,14 +28,16 @@ public class Reproduccion {
                 throw new IllegalArgumentException("Ambos animales deben tener una salud de al menos 50 para reproducirse");
             }
 
+            double pesoPromedio = (animal1.getPeso() + animal2.getPeso()) / 2; // Asume que ambos animales tienen el mismo peso
+
             Animales nuevoAnimal = new Animales(
-                    "Nombre del nuevo animal",
+                    "Cria_" + animal1.getEspecie() + "_1",
                     animal1.getPosicion(),
                     (animal1.getSalud() + animal2.getSalud()) / 2,
                     Math.max(animal1.getEdad(), animal2.getEdad()),
                     false,
                     animal1.getEspecie(),
-                    animal1.getAlimentacion() // Asume que ambos animales tienen el mismo tipo de alimentación
+                    pesoPromedio
             );
 
             return nuevoAnimal;

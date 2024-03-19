@@ -7,12 +7,15 @@ public class Animales extends Organismo {
     private String especie;
     private String alimentacion;
 
+    private double peso;
+
     private static List<Animales> animalesList = new ArrayList<>();
 
     public Animales(String nombre,Posicion posicion, int salud, int edad, boolean estadoReproductivo, String especie, double peso) {
         super(nombre, posicion, salud, edad, estadoReproductivo);
         this.especie = especie;
         this.alimentacion = alimentacion;
+        this.peso = peso;
         animalesList.add(this);
     }
 
@@ -34,6 +37,14 @@ public class Animales extends Organismo {
 
     public static List<Animales> getAnimalesList() {
         return animalesList;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
     }
     @Override
     public String toString() {
