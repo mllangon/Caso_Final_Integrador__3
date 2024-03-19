@@ -1,20 +1,28 @@
 import java.util.List;
 import java.util.Scanner;
+
+import Entidades.Ambiente.Ambiente;
+import Entidades.Interacciones;
 import Entidades.Organismos.Organismo;
 import Entidades.Organismos.Animales;
 import Entidades.Organismos.Plantas;
 import Usuarios_Sim.Autenticacion;
 import Entidades.Organismos.Organismo.Posicion;
+import AnálisisAvanzado.Datos;
+import AnálisisAvanzado.Funciones;
+import AnálisisAvanzado.Problemas;
 
 public class Simulacion {
     private Autenticacion autenticacion;
+    private Datos datos;
+    private Funciones funciones;
+    private Problemas problemas;
 
     public Simulacion() {
         this.autenticacion = new Autenticacion();
-    }
-
-    public void iniciar() {
-        Scanner scanner = new Scanner(System.in);
+        this.datos = new Datos();
+        this.funciones = new Funciones();
+        this.problemas = new Problemas();
 
         Animales carnivoroMacho1 = new Animales("Leon_M", new Posicion(0, 0), 100, 5, true, "Carnívoro", 50);
         Animales carnivoroHembra1 = new Animales("León_H", new Posicion(1, 1), 100, 5, true, "Carnívoro", 45);
@@ -36,6 +44,11 @@ public class Simulacion {
         Plantas planta3 = new Plantas("Hierba_S", new Posicion(2, 2), 100, 5, true, "Hierba", "Sabana");
         Plantas planta4 = new Plantas("Arbusto", new Posicion(3, 3), 100, 5, true, "Arbusto", "Bosque");
         Plantas planta5 = new Plantas("Frutas", new Posicion(4, 4), 100, 5, true, "Fruto", "Bosque");
+
+
+    }
+    public void iniciar() {
+        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Bienvenido a EcoSim");
         System.out.println("Por favor, introduce tu usuario:");
@@ -77,15 +90,40 @@ public class Simulacion {
                 }
                 break;
             case "Análisis":
-                // Aquí implementar la funcionalidad para la opción "Análisis"
+                realizarAnalisis();
+
                 break;
             case "Simulación":
-                // Aquí implementar la funcionalidad para la opción "Simulación"
+                System.out.println("Simulando...");
                 break;
             default:
                 System.out.println("Opción no válida.");
                 break;
         }
+    }
+
+    private void realizarAnalisis() {
+        List<Animales> animales = Animales.getAnimalesList();
+        Ambiente ambiente = new Ambiente("Arido", "Sabana", 1000);
+        // Aquí puedes llamar a los métodos de las clases Datos, Funciones y Problemas
+        System.out.println("Realizando análisis...");
+
+        // Para la visualización de datos
+        System.out.println(Datos.visualizarDatos(Animales.getAnimalesList()));
+
+        // Para registrar y ejecutar interacciones
+        // Ejemplo de cómo registrar y ejecutar una interacción
+        // Asumiendo que tienes una lista de Animales y un objeto Ambiente
+        funciones.registrarInteraccionOrganismos("predacion", (depredador, presa) -> {
+            // Aquí podrías definir lo que sucede en una predación
+        });
+        // Asumiendo que tienes al menos dos animales para demostrar la interacción
+        funciones.ejecutarInteraccionOrganismos("predacion", animales.get(0), animales.get(3));
+
+        // Para evaluar equilibrios, conservación y simular impactos
+        problemas.buscarEquilibrios();
+        problemas.evaluarConservacion(/* lista de animales */, /* ambiente */);
+        problemas.simularImpactos(/* ambiente */, /* predicado para simular cambio */);
     }
 
     public static void main(String[] args) {
