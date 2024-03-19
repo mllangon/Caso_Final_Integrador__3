@@ -42,40 +42,55 @@ public class Simulador {
 
     public void desplazarAnimales() {
         List<Animales> animales = Animales.getAnimalesList();
-        for (Animales animal : animales) {
-            if (!animalesMovidos.contains(animal)) {
-                Organismo.Posicion posicion = animal.getPosicion();
-                posicion.setX(posicion.getX() + random.nextInt(3) - 1);
-                posicion.setY(posicion.getY() + random.nextInt(3) - 1);
-                System.out.println(animal.getNombre() + " se ha movido a la posición (" + posicion.getX() + ", " + posicion.getY() + ")");
-                animalesMovidos.add(animal);
-                break;
+        if (animales != null) {
+            for (Animales animal : animales) {
+                if (!animalesMovidos.contains(animal)) {
+                    Organismo.Posicion posicion = animal.getPosicion();
+                    if (posicion != null) {
+                        posicion.setX(posicion.getX() + random.nextInt(3) - 1);
+                        posicion.setY(posicion.getY() + random.nextInt(3) - 1);
+                        System.out.println(animal.getNombre() + " se ha movido a la posición (" + posicion.getX() + ", " + posicion.getY() + ")");
+                        animalesMovidos.add(animal);
+                        break;
+                    }
+                }
             }
         }
     }
 
     public void aplicarEventos() {
         List<Animales> animales = Animales.getAnimalesList();
-        for (Animales animal : animales) {
-            if (random.nextInt(100) < 10) { // 10% de probabilidad de que ocurra un evento
-                int eventoIndex = random.nextInt(eventos.length);
-                eventos[eventoIndex].aplicar(animal);
-                System.out.println("Se ha aplicado el evento " + eventos[eventoIndex].getClass().getSimpleName() + " a " + animal.getNombre());
+        if (animales != null) {
+            for (Animales animal : animales) {
+                if (animal != null) {
+                    if (random.nextInt(100) < 10) { // 10% de probabilidad de que ocurra un evento
+                        int eventoIndex = random.nextInt(eventos.length);
+                        EventoAleatorio evento = eventos[eventoIndex];
+                        if (evento != null) {
+                            evento.aplicar(animal);
+                            System.out.println("Se ha aplicado el evento " + evento.getClass().getSimpleName() + " a " + animal.getNombre());
+                        }
+                    }
+                }
             }
         }
     }
 
     public void pelear() {
         List<Animales> animales = Animales.getAnimalesList();
-        for (Animales animal1 : animales) {
-            for (Animales animal2 : animales) {
-                if (!animal1.equals(animal2) && animal1.getPosicion().equals(animal2.getPosicion())) {
-                    if (animal1.getSalud() > animal2.getSalud()) {
-                        animal2.setSalud(0);
-                        System.out.println(animal1.getNombre() + " ha ganado la pelea contra " + animal2.getNombre());
-                    } else {
-                        animal1.setSalud(0);
-                        System.out.println(animal2.getNombre() + " ha ganado la pelea contra " + animal1.getNombre());
+        if (animales != null) {
+            for (Animales animal1 : animales) {
+                if (animal1 != null) {
+                    for (Animales animal2 : animales) {
+                        if (animal2 != null && !animal1.equals(animal2) && animal1.getPosicion().equals(animal2.getPosicion())) {
+                            if (animal1.getSalud() > animal2.getSalud()) {
+                                animal2.setSalud(0);
+                                System.out.println(animal1.getNombre() + " ha ganado la pelea contra " + animal2.getNombre());
+                            } else {
+                                animal1.setSalud(0);
+                                System.out.println(animal2.getNombre() + " ha ganado la pelea contra " + animal1.getNombre());
+                            }
+                        }
                     }
                 }
             }
