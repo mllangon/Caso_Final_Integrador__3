@@ -1,7 +1,9 @@
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import Entidades.Ambiente.Ambiente;
+import Simulador.Simulador;
 import Entidades.Interacciones;
 import Entidades.Organismos.Organismo;
 import Entidades.Organismos.Animales;
@@ -11,12 +13,19 @@ import Entidades.Organismos.Organismo.Posicion;
 import AnálisisAvanzado.Datos;
 import AnálisisAvanzado.Funciones;
 import AnálisisAvanzado.Problemas;
-
+import D_Poblacionales.Eventos.CambioClimatico;
+import D_Poblacionales.Eventos.DesastreNatural;
+import D_Poblacionales.Eventos.Enfermedad;
+import D_Poblacionales.Eventos.EventoAleatorio;
+import Simulador.Simulador;
 public class Simulacion {
+    private Simulador simulador = new Simulador();
     private Autenticacion autenticacion;
     private Datos datos;
     private Funciones funciones;
     private Problemas problemas;
+    private Random random = new Random();
+    private EventoAleatorio[] eventos = {new DesastreNatural(), new Enfermedad(), new CambioClimatico()};
 
     public Simulacion() {
         this.autenticacion = new Autenticacion();
@@ -94,7 +103,8 @@ public class Simulacion {
 
                 break;
             case "Simulación":
-                System.out.println("Simulando...");
+                System.out.println("Comenzando simulación...");
+                simulador.iniciarSimulacion();
                 break;
             case "Salir":
                 System.out.println("Saliendo...");
