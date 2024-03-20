@@ -21,6 +21,10 @@ public class Reproduccion {
         String nombre1 = animal1.getNombre();
         String nombre2 = animal2.getNombre();
 
+        if (nombre1.startsWith("Cria_") && nombre2.startsWith("Cria_")) {
+            throw new IllegalArgumentException("Las crías no pueden reproducirse entre sí");
+        }
+
         // Verifica si los nombres de los animales son iguales excepto por la última letra
         if (nombre1.substring(0, nombre1.length() - 1).equals(nombre2.substring(0, nombre2.length() - 1))) {
             boolean cerca = Math.abs(animal1.getPosicion().getX() - animal2.getPosicion().getX()) < 2 && Math.abs(animal1.getPosicion().getY() - animal2.getPosicion().getY()) < 2;
@@ -33,7 +37,7 @@ public class Reproduccion {
                 double pesoPromedio = (animal1.getPeso() + animal2.getPeso()) / 2; // Asume que ambos animales tienen el mismo peso
 
                 Animales nuevoAnimal = new Animales(
-                        "Cria_" + animal1.getEspecie() + "_1",
+                        "Cria_" + animal1.getNombre() + "_" + animal2.getNombre(),
                         animal1.getPosicion(),
                         (animal1.getSalud() + animal2.getSalud()) / 2,
                         Math.max(animal1.getEdad(), animal2.getEdad()),

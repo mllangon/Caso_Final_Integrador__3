@@ -28,23 +28,34 @@ public class Simulador {
     private EventoAleatorio[] eventos = {new DesastreNatural(), new CambioClimatico()};
     private Crecimiento crecimiento = new Crecimiento();
     private Reproduccion reproduccion = new Reproduccion();
+    private static final int MAX_DIAS = 100;
 
     public void iniciarSimulacion() {
         int dia = 1;
-        while (true) {
+        while (dia <= MAX_DIAS) {
             System.out.println("Día " + dia + " de la simulación:");
             desplazarAnimales();
             aplicarEventos();
             pelear();
             mostrarResultados();
+            dia++;
+            animalesMovidos.clear();;
 
             // Imprime los animales que se han reproducido
             List<Animales> animales = Animales.getAnimalesList();
-            for (Animales animal : animales) {
-                if (animal.getNombre().startsWith("Cria_")) {
-                    System.out.println(animal.getNombre() + " ha nacido");
+            List<Animales> nuevosAnimales = new ArrayList<>();
+            for (int i = 0; i < animales.size() - 1; i++) {
+                for (int j = i + 1; j < animales.size(); j++) {
+                    try {
+                        Animales nuevoAnimal = reproduccion.reproducir(animales.get(i), animales.get(j));
+                        nuevosAnimales.add(nuevoAnimal);
+                        System.out.println(nuevoAnimal.getNombre() + " ha nacido");
+                    } catch (IllegalArgumentException e) {
+                        // Ignora la excepción y continúa con la siguiente pareja de animales
+                    }
                 }
             }
+            animales.addAll(nuevosAnimales);
 
             System.out.println("Presione Enter para el siguiente turno o escriba 'salir' para terminar la simulación.");
             Scanner scanner = new Scanner(System.in);
