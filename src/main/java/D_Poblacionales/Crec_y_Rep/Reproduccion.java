@@ -22,27 +22,32 @@ public class Reproduccion {
         String nombre2 = animal2.getNombre();
 
         // Verifica si los nombres de los animales son iguales excepto por la última letra
-        if (nombre1.substring(0, nombre1.length() - 1).equals(nombre2.substring(0, nombre2.length() - 1)) &&
-                ((nombre1.endsWith("H") && nombre2.endsWith("M")) || (nombre1.endsWith("M") && nombre2.endsWith("H")))) {
-            if (animal1.getSalud() < 50 || animal2.getSalud() < 50) {
-                throw new IllegalArgumentException("Ambos animales deben tener una salud de al menos 50 para reproducirse");
+        if (nombre1.substring(0, nombre1.length() - 1).equals(nombre2.substring(0, nombre2.length() - 1))) {
+            boolean cerca = Math.abs(animal1.getPosicion().getX() - animal2.getPosicion().getX()) < 2 && Math.abs(animal1.getPosicion().getY() - animal2.getPosicion().getY()) < 2;
+
+            if (cerca && random.nextInt(100) < 50) { // 50% de posibilidades de reproducirse
+                if (animal1.getSalud() < 50 || animal2.getSalud() < 50) {
+                    throw new IllegalArgumentException("Ambos animales deben tener una salud de al menos 50 para reproducirse");
+                }
+
+                double pesoPromedio = (animal1.getPeso() + animal2.getPeso()) / 2; // Asume que ambos animales tienen el mismo peso
+
+                Animales nuevoAnimal = new Animales(
+                        "Cria_" + animal1.getEspecie() + "_1",
+                        animal1.getPosicion(),
+                        (animal1.getSalud() + animal2.getSalud()) / 2,
+                        Math.max(animal1.getEdad(), animal2.getEdad()),
+                        false,
+                        animal1.getEspecie(),
+                        pesoPromedio
+                );
+
+                System.out.println(animal1.getNombre() + " y " + animal2.getNombre() + " se han reproducido y han creado a " + nuevoAnimal.getNombre());
+
+                return nuevoAnimal;
             }
-
-            double pesoPromedio = (animal1.getPeso() + animal2.getPeso()) / 2; // Asume que ambos animales tienen el mismo peso
-
-            Animales nuevoAnimal = new Animales(
-                    "Cria_" + animal1.getEspecie() + "_1",
-                    animal1.getPosicion(),
-                    (animal1.getSalud() + animal2.getSalud()) / 2,
-                    Math.max(animal1.getEdad(), animal2.getEdad()),
-                    false,
-                    animal1.getEspecie(),
-                    pesoPromedio
-            );
-
-            return nuevoAnimal;
-        } else {
-            throw new IllegalArgumentException("Los animales deben ser de la misma especie y de sexos opuestos para reproducirse");
         }
+
+        throw new IllegalArgumentException("Los animales deben ser de la misma especie y de sexos opuestos para reproducirse");
     }
 }

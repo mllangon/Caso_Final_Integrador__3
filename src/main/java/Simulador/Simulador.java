@@ -38,6 +38,14 @@ public class Simulador {
             pelear();
             mostrarResultados();
 
+            // Imprime los animales que se han reproducido
+            List<Animales> animales = Animales.getAnimalesList();
+            for (Animales animal : animales) {
+                if (animal.getNombre().startsWith("Cria_")) {
+                    System.out.println(animal.getNombre() + " ha nacido");
+                }
+            }
+
             System.out.println("Presione Enter para el siguiente turno o escriba 'salir' para terminar la simulación.");
             Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
@@ -79,33 +87,32 @@ public class Simulador {
 
         for (Animales animal : copiaAnimales) {
             for (Animales animal2 : copiaAnimales) {
-                String nombre1 = animal.getNombre();
-                String nombre2 = animal2.getNombre();
-                // Verifica si los nombres de los animales son iguales excepto por la última letra
-                boolean mismoNombre = nombre1.substring(0, nombre1.length() - 2).equals(nombre2.substring(0, nombre2.length() - 2));
-                boolean diferenteSexo = !nombre1.substring(nombre1.length() - 1).equals(nombre2.substring(nombre2.length() - 1));
+                if (!animal.equals(animal2) && !animal.getNombre().equals(animal2.getNombre())) {
+                    String nombre1 = animal.getNombre();
+                    String nombre2 = animal2.getNombre();
+                    boolean mismoNombre = nombre1.substring(0, nombre1.length() - 2).equals(nombre2.substring(0, nombre2.length() - 2));
+                    boolean diferenteSexo = !nombre1.substring(nombre1.length() - 1).equals(nombre2.substring(nombre2.length() - 1));
 
-                if (!animal.equals(animal2) && mismoNombre && diferenteSexo && Math.abs(animal.getPosicion().getX() - animal2.getPosicion().getX()) < 2 && Math.abs(animal.getPosicion().getY() - animal2.getPosicion().getY()) < 2) {
-                    if (random.nextInt(100) < 50) { // Aumenta la probabilidad de las peleas al 50%
-                        if (animal.getSalud() > animal2.getSalud()) {
-                            animal2.setSalud(0);
-                            System.out.println(animal.getNombre() + " ha ganado la pelea contra " + animal2.getNombre());
-                        } else {
-                            animal.setSalud(0);
-                            System.out.println(animal2.getNombre() + " ha ganado la pelea contra " + animal.getNombre());
-                        }
-                        // Muestra la nueva vida de cada animal
-                        System.out.println(animal.getNombre() + " tiene ahora " + animal.getSalud() + " de vida");
-                        System.out.println(animal2.getNombre() + " tiene ahora " + animal2.getSalud() + " de vida");
+                    if (mismoNombre && diferenteSexo && Math.abs(animal.getPosicion().getX() - animal2.getPosicion().getX()) < 2 && Math.abs(animal.getPosicion().getY() - animal2.getPosicion().getY()) < 2) {
+                        if (random.nextInt(100) < 50) { // Aumenta la probabilidad de las peleas al 50%
+                            if (animal.getSalud() > animal2.getSalud()) {
+                                animal2.setSalud(0);
+                                System.out.println(animal.getNombre() + " ha ganado la pelea contra " + animal2.getNombre());
+                            } else {
+                                animal.setSalud(0);
+                                System.out.println(animal2.getNombre() + " ha ganado la pelea contra " + animal.getNombre());
+                            }
+                            System.out.println(animal.getNombre() + " tiene ahora " + animal.getSalud() + " de vida");
+                            System.out.println(animal2.getNombre() + " tiene ahora " + animal2.getSalud() + " de vida");
 
-                        // Verifica si la vida de algún animal llegó a 0 y, de ser así, lo remueve del juego
-                        if (animal.getSalud() <= 0) {
-                            Animales.getAnimalesList().remove(animal);
-                            System.out.println(animal.getNombre() + " ha muerto y ha sido removido del juego");
-                        }
-                        if (animal2.getSalud() <= 0) {
-                            Animales.getAnimalesList().remove(animal2);
-                            System.out.println(animal2.getNombre() + " ha muerto y ha sido removido del juego");
+                            if (animal.getSalud() <= 0) {
+                                Animales.getAnimalesList().remove(animal);
+                                System.out.println(animal.getNombre() + " ha muerto y ha sido removido del juego");
+                            }
+                            if (animal2.getSalud() <= 0) {
+                                Animales.getAnimalesList().remove(animal2);
+                                System.out.println(animal2.getNombre() + " ha muerto y ha sido removido del juego");
+                            }
                         }
                     }
                 }
